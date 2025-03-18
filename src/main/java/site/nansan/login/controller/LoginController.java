@@ -22,6 +22,8 @@ public class LoginController implements LoginSwaggerController{
     public ResponseEntity<Map<String, String>> createOrGetUser(JoinRequestDto joinDTO, HttpServletResponse response) {
         String accessToken = loginService.joinOrGetUser(joinDTO, response);
 
+        // Todo : status 필드를 추가하고, 회원가입할때는 0을 보내 추가 정보를 보내도록 하고 기존 로그인때는 1을 보내서 넘어간다. response body에 status를 추가한다.
+
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("access", accessToken);
 

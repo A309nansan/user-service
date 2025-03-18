@@ -9,7 +9,6 @@ import site.nansan.user.domain.Users;
 import site.nansan.user.service.UserService;
 
 @RestController
-@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController implements UserSwaggerController {
 
@@ -20,7 +19,7 @@ public class UserController implements UserSwaggerController {
         Users authenticatedUser = userService.getAuthenticatedUser();
 
         if (authenticatedUser == null) {
-            return ResponseEntity.status(401).build(); // 인증되지 않은 경우
+            return ResponseEntity.status(401).build();
         }
 
         return ResponseEntity.ok(authenticatedUser);

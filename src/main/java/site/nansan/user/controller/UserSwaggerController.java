@@ -14,6 +14,6 @@ public interface UserSwaggerController {
             @ApiResponse(responseCode = "200", description = "성공적으로 인증된 사용자 정보 반환"),
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자")
     })
-    @GetMapping("/api/v1/me")
+    @GetMapping("/api/v1/auth/user/me")
     ResponseEntity<Users> getAuthenticatedUser();
 }

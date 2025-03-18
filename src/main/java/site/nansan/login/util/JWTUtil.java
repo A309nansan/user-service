@@ -24,25 +24,6 @@ public class JWTUtil {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("category", String.class);
     }
 
-    public String getNickName(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("nickname", String.class);
-    }
-
-    public Role getRole(String token) {
-        try {
-            String roleString = Jwts.parser()
-                    .verifyWith(secretKey)
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload()
-                    .get("role", String.class);
-
-            return Role.valueOf(roleString);
-        } catch (IllegalArgumentException | NullPointerException e) {
-            return null;
-        }
-    }
-
     /** userId 추출 메서드 */
     public Long getUserId(String token) {
         try {

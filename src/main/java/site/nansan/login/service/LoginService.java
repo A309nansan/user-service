@@ -36,7 +36,7 @@ public class LoginService {
                     return userRepository.save(newUser);
                 });
 
-        String access = jwtUtil.createJwt("access", user.getNickName(), user.getRole(), 30000L, user.getId());
+        String access = jwtUtil.createJwt("access", user.getNickName(), user.getRole(), 600000L, user.getId());
         String refresh = jwtUtil.createJwt("refresh", user.getNickName(), user.getRole(),86400000L, user.getId());
 
         utilFunction.addRefreshEntity(user.getPlatformId(), refresh);

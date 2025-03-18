@@ -16,19 +16,19 @@ public class Users {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Size(min = 8, max = 50, message = "소셜 로그인 id는 최소 8자 이상, 최대 50자 이하 입니다.")
+//    @Size(min = 8, max = 50, message = "소셜 로그인 id는 최소 8자 이상, 최대 50자 이하 입니다.")
     @Column(name = "platform_id", nullable = false, unique = true)
     private String platformId;
 
-    @Size(max = 30, message = "이메일은 최대 30자까지 가능합니다.")
+//    @Size(max = 30, message = "이메일은 최대 30자까지 가능합니다.")
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Size(min = 3, max = 30, message = "이름은 3자 이상, 30자 이하여야 합니다.")
+//    @Size(min = 3, max = 30, message = "이름은 3자 이상, 30자 이하여야 합니다.")
     @Column(name = "nickname", nullable = false, unique = true)
     private String nickName;
 
-    @Column(name = "social_platform", length = 50)
+    @Column(name = "social_platform", length = 20)
     private SocialPlatform socialPlatform;
 
     @Column(name="role", length=10)

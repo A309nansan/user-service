@@ -1,29 +1,38 @@
 package site.nansan.user.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.context.SecurityContextHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site.nansan.user.domain.Role;
 import site.nansan.user.domain.Users;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
-    public Users getAuthenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    private final HttpServletRequest request;
 
-        if (authentication == null || !authentication.isAuthenticated()) {
+    public Users getAuthenticatedUser() {
+        String userIdHeader = request.getHeader("X-User-Id");
+        String nicknameHeader = request.getHeader("X-User-Nickname");
+        String roleHeader = request.getHeader("X-User-Role");
+
+        if (userIdHeader == null || nicknameHeader == null || roleHeader == null) {
             return null;
         }
 
-        Object principal = authentication.getPrincipal();
-
-        if (principal instanceof Users) {
-            return (Users) principal;
-        }
-
-        return null;
+        return new Users(
+                Long.parseLong(userIdHeader),
+                nicknameHeader,
+                Role.valueOf(roleHeader)  // ENUM 변환
+        );
     }
 
 }
