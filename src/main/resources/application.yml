@@ -1,9 +1,4 @@
 server:
-  servlet:
-    encoding:
-      charset: UTF-8
-      force: true
-      force-response: true
   forward-headers-strategy: native
   address: 0.0.0.0
   port: 0
@@ -12,7 +7,7 @@ server:
 
 spring:
   application:
-    name: login-server
+    name: user-service
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
@@ -42,11 +37,14 @@ springdoc:
   swagger-ui:
     enabled: true
     path: /swagger-ui.html
+#    config-url: /v3/api-docs/swagger-config
   override-with-generic-response: false
 
 eureka:
   instance:
     instance-id: "${spring.cloud.client.hostname}:${random.int}"
+#    prefer-ip-address: true
+#    ip-address: 127.0.0.1
   client:
     register-with-eureka: true
     fetch-registry: true
