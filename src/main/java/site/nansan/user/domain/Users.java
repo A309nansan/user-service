@@ -34,6 +34,7 @@ public class Users {
     @Column(name="role", length=10)
     private Role role;
 
+
     @Builder
     public Users(String platformId, String email, String nickName, SocialPlatform socialPlatform, Role role) {
         this.platformId = platformId;
@@ -48,5 +49,6 @@ public class Users {
         this.nickName = nickName;
         this.role = role;
     }
+
 
 }

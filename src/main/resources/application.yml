@@ -34,6 +34,11 @@ spring:
   web:
     resources:
       add-mappings: true
+  data:
+    redis:
+      host: 13.124.19.13 # 퍼블릭 IP
+      port: 6379
+      timeout: 6000ms
 
 springdoc:
   api-docs:
