@@ -22,6 +22,10 @@ public class ChildService {
      * @return 생성된 자녀 객체
      */
     public Child createChild(ChildRequestDto childRequestDto) {
+        /* todo : 생성할때는 setter로 하는게 아니라 생성자나 builder을 써야 합니다.
+            상관 없지만 이런 방법은 human error을 야기해요
+            즉 이건 여기 부분에서 틀린게 아니라, child Entity 설계가 잘못됐을 확률이 높아요
+        */
         Child child = new Child();
         child.setName(childRequestDto.getName());
         child.setProfileImageUrl(childRequestDto.getProfileImageUrl());

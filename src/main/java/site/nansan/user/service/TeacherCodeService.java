@@ -28,6 +28,7 @@ public class TeacherCodeService {
         String key = TEACHER_CODE_PREFIX + userId;
         redisTemplate.opsForValue().set(key, code, TEACHER_CODE_TTL, TimeUnit.HOURS);
 
+        // todo : 커밋할때 log 출력 절대금지 -> 사용자 정보 다보임
         log.info("Teacher code generated for user {}: {} (valid for {} hours)", userId, code, TEACHER_CODE_TTL);
         return code;
     }

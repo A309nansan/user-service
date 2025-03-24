@@ -79,7 +79,10 @@ public class UserController implements UserSwaggerController {
      * 사용자 role이 TEACHER일 경우에만 코드 생성
      * @return 생성된 코드 또는 오류 응답
      */
+    // todo : Override 해야됨.
+    // todo : Interface에서 mapping 주소 넣기. api 주소 중복됨!
     @PostMapping("/teacher/code")
+    @Override
     public ResponseEntity<?> generateTeacherCode() {
         ResponseEntity<?> validationResult = validateTeacherRole();
 
@@ -131,6 +134,9 @@ public class UserController implements UserSwaggerController {
      */
     @PostMapping("/parent/child")
     public ResponseEntity<?> addChild(@RequestBody ChildRequestDto childRequestDto) {
+
+        // todo : 공통 로직은 상위 클래스에서 호출.
+        //        Users user = userService.getAuthenticatedUser();
         ResponseEntity<?> validationResult = validateParentRole();
 
         if (validationResult.getStatusCode().isError()) {
