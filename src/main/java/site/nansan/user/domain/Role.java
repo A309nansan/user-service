@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public enum Role {
-    USER, ADMIN, TEACHER;
+    USER, TEACHER, PARENT;
     public static boolean isValidRole(String role) {
         try {
             Role.valueOf(role);

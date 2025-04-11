@@ -1,27 +1,32 @@
 server:
   forward-headers-strategy: native
   address: 0.0.0.0
-  port: 8888
+  # user-service       : 18080
+  # category-service   : 18081
+  # m-service          : 18082
+  # en-service         : 18083
+  port: 18080
+  servlet:
+    context-path: /api/v1/user
   ssl:
     enabled: false
 
 spring:
   application:
     name: user-service
-  cloud:
-    client:
-      hostname: 127.0.0.1
-      ip-address: 127.0.0.1
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  jwt:
+    secret: ${JWT_SECRET}
+  web:
+    resources:
+      add-mappings: true
+
+  # JPA
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    # Hibernate 6.x 이상부터는 MySQL8Dialect가 deprecated (더 이상 권장되지 않음) 되었고, MySQLDialect 하나로 통합
+    database-platform: org.hibernate.dialect.MySQLDialect
     properties:
       hibernate:
         storage_engine: innodb
@@ -29,25 +34,79 @@ spring:
         use_sql_comments: false
     open-in-view: false
     show_sql: true
-  jwt:
-    secret: ${JWT_SECRET_KEY}
-  web:
-    resources:
-      add-mappings: true
 
+  # NoSQL
+  data:
+    # MongoDB
+    mongodb:
+      host: ${MONGODB_HOST}
+      port: ${MONGODB_PORT}
+      username: ${MONGODB_USERNAME}
+      password: ${MONGODB_PASSWORD}
+      database: user-mongodb
+    # Redis
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+      database: 0
+      timeout: 6000ms
+
+
+  # RDBMS
+  datasource:
+    # MySQL
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/user-mysql?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
+  # Spring Boot 3.1 이상부터는 spring.config.import를 명시적으로 써야 Config Server를 import할 수 있다.
+  config:
+    import: 'configserver:'
+
+  # Spring Cloud
+  cloud:
+    # Eureka
+    client:
+      hostname: user-service
+    # Config
+    config:
+      uri: ${CONFIG_SERVER_URI}
+      username: ${CONFIG_SERVER_USERNAME}
+      password: ${CONFIG_SERVER_PASSWORD}
+      name: spring
+      profile: dev
+      label: main
+    # Bus
+    bus:
+      enabled: true
+
+  # RabbitMQ: Spring Cloud Bus 활용을 위한 설정
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+
+# Swagger
 springdoc:
   api-docs:
     enabled: true
   swagger-ui:
-    enabled: false
+    enabled: true
 
+# Eureka 통신
 eureka:
   instance:
-    instance-id: "${spring.cloud.client.hostname}:${random.int}"
-    prefer-ip-address: true
-    ip-address: 127.0.0.1
+    prefer-ip-address: false
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
+      defaultZone: http://eureka:8761/eureka
+
+minio:
+  url: https://s3.nansan.site
+  access-key: ${MINIO_ACCESS_KEY}
+  secret-key: ${MINIO_SECRET_KEY}

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.nansan.login.util.JWTUtil;
 import site.nansan.login.util.UtilFunction;
+import site.nansan.refresh.exception.RefreshTokenExpiredException;
 import site.nansan.refresh.exception.RefreshTokenInvalidException;
 import site.nansan.refresh.exception.RefreshTokenNotExistException;
 import site.nansan.refresh.repository.RefreshRepository;
@@ -27,6 +28,9 @@ public class ReissueService {
 
         if (refreshToken == null)
             throw new RefreshTokenNotExistException();
+        if (jwtUtil.isExpired(refreshToken)) {
+            throw new RefreshTokenExpiredException();
+        }
         if (!"refresh".equals(jwtUtil.getCategory(refreshToken)) || !refreshRepository.existsByRefresh(refreshToken)) {
             throw new RefreshTokenInvalidException();
         }
@@ -36,7 +40,7 @@ public class ReissueService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
 
         String newAccessToken = jwtUtil.createJwt("access", user.getNickName(), user.getRole(), 30000L, user.getId());
-        String newRefreshToken = jwtUtil.createJwt("refresh", user.getNickName(), user.getRole(), 86400000L, user.getId());
+        String newRefreshToken = jwtUtil.createJwt("refresh", user.getNickName(), user.getRole(), 31536000000L, user.getId());
 
         refreshRepository.deleteByRefresh(refreshToken);
         utilFunction.addRefreshEntity(user.getPlatformId(), newRefreshToken);

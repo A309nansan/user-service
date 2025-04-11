@@ -17,7 +17,7 @@ public class ReissueController {
 
     private final ReissueService reissueService;
 
-    @PostMapping("/api/v1/auth/reissue")
+    @PostMapping("/reissue")
     public ResponseEntity<Map<String, String>> reissueAccessToken(@RequestHeader("refresh") String refreshToken, HttpServletResponse response) {
 
         String newAccessToken = reissueService.reissueToken(refreshToken, response);

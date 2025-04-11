@@ -8,4 +8,8 @@ public class JoinRequestDto {
     private String email;
     private String platformId;
     private String nickName;
+    private Boolean detailStatus;
+    private String hashId;
+    private String profileImageUrl;
+    private String role;
 }

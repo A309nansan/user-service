@@ -32,7 +32,7 @@ public interface LoginSwaggerController {
                     )
             )
     )
-    @PostMapping("/api/v1/auth/login")
+    @PostMapping("/login")
     ResponseEntity<Map<String, String>> createOrGetUser(
             @RequestBody @Valid JoinRequestDto joinDTO,
             HttpServletResponse response
@@ -40,7 +40,7 @@ public interface LoginSwaggerController {
 
     @Operation(summary = "로그아웃", description = "사용자를 로그아웃 처리합니다.")
     @ApiResponse(responseCode = "200", description = "로그아웃에 성공하였습니다.")
-    @PostMapping("/api/v1/auth/logout")
+    @PostMapping("/logout")
     ResponseEntity<Void> logout(
             @RequestHeader("refresh") String refreshToken,
             HttpServletResponse response

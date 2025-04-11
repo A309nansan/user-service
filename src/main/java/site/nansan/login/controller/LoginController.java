@@ -4,10 +4,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import site.nansan.login.dto.JoinRequestDto;
+import site.nansan.login.dto.RoleSelectionDto;
 import site.nansan.login.service.LoginService;
+import site.nansan.user.domain.Role;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,5 +43,20 @@ public class LoginController implements LoginSwaggerController{
         loginService.logout(refreshToken, response);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/user/role")
+    public ResponseEntity<Void> selectUserRole(@RequestBody RoleSelectionDto roleRequest) {
+        Long userId = roleRequest.getUserId();
+        String roleString = roleRequest.getRole();
+
+        if (!Role.isValidRole(roleString)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Role role = Role.valueOf(roleString);
+        return loginService.selectUserRole(userId, role);
+    }
+
+
 
 }

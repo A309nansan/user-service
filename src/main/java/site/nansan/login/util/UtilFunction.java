@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import site.nansan.refresh.domain.Refresh;
 import site.nansan.refresh.repository.RefreshRepository;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 
 @Component
@@ -24,4 +26,24 @@ public class UtilFunction {
 
         refreshRepository.save(refreshEntity);
     }
+
+    public String generateHashIdFromPlatformId(String platformId) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(platformId.getBytes());
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte hashByte : hashBytes) {
+                String hex = Integer.toHexString(0xff & hashByte);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString(); // 64자리 해시
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 알고리즘을 사용할 수 없습니다.", e);
+        }
+    }
+
+
 }
