@@ -39,7 +39,7 @@ dependencies {
 
 	// MongoDB, Redis, MySQL dependencies
 //	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-//	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
 	// Spring Cloud Config, Spring Cloud Bus: RabbitMQ

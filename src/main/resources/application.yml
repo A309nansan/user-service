@@ -35,8 +35,8 @@ spring:
     open-in-view: false
     show_sql: true
 
-#  # NoSQL
-#  data:
+  # NoSQL
+  data:
 #    # MongoDB
 #    mongodb:
 #      host: ${MONGODB_HOST}
@@ -44,13 +44,13 @@ spring:
 #      username: ${MONGODB_USERNAME}
 #      password: ${MONGODB_PASSWORD}
 #      database: user-mongodb
-#    # Redis
-#    redis:
-#      host: ${REDIS_HOST}
-#      port: ${REDIS_PORT}
-#      password: ${REDIS_PASSWORD}
-#      database: 0
-#      timeout: 6000ms
+    # Redis
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+      database: 0
+      timeout: 6000ms
 
 
   # RDBMS
