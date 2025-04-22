@@ -104,9 +104,9 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://eureka:8761/eureka
+      defaultZone: ${DEFAULT_EUREKA_URL}
 
 minio:
-  url: https://s3.nansan.site
+  url: ${MINIO_API_URL}
   access-key: ${MINIO_ACCESS_KEY}
   secret-key: ${MINIO_SECRET_KEY}
