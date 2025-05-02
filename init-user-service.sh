@@ -38,7 +38,7 @@ CLIENT_TOKEN=$(echo "$TOKEN_RESPONSES" | jq -r '.auth.client_token')
 SECRET_RESPONSE=$(curl -s --header "X-Vault-Token: ${CLIENT_TOKEN}" \
   --request GET https://vault.nansan.site/v1/kv/data/authentication)
 
-JWT_SECRET=$(echo "$SECRET_RESPONSE" | jq -r '.data.data.token.jwt')
+JWT_SECRET=$(echo "$SECRET_RESPONSE" | jq -r '.data.data.token.external')
 REDIS_PASSWORD=$(echo "$SECRET_RESPONSE" | jq -r '.data.data.redis.username')
 MYSQL_USERNAME=$(echo "$SECRET_RESPONSE" | jq -r '.data.data.mysql.username')
 MYSQL_PASSWORD=$(echo "$SECRET_RESPONSE" | jq -r '.data.data.mysql.password')
@@ -83,7 +83,7 @@ docker run -d \
   -e RABBITMQ_USERNAME=${RABBITMQ_USERNAME} \
   -e RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD} \
   -e DEFAULT_EUREKA_URL=http://eureka:8761/eureka \
-  -e MINIO_API_URL=https://s3.nansan.site \
+  -e MINIO_API_URL=http://minio:9000 \
   -e MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY} \
   -e MINIO_SECRET_KEY=${MINIO_SECRET_KEY} \
   --network nansan-network \
