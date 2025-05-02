@@ -1,11 +1,7 @@
 server:
   forward-headers-strategy: native
   address: 0.0.0.0
-  # user-service       : 18080
-  # category-service   : 18081
-  # m-service          : 18082
-  # en-service         : 18083
-  port: 18080
+  port: 8080
   servlet:
     context-path: /api/v1/user
   ssl:
