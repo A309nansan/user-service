@@ -8,10 +8,4 @@ WORKDIR /app
 
 COPY build/libs/*.jar user-service.jar
 
-# user-service       : 18080
-# category-service   : 18081
-# m-service          : 18082
-# en-service         : 18083
-EXPOSE 18080
-
 ENTRYPOINT ["java", "-jar", "/app/user-service.jar"]
